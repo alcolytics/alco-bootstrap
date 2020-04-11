@@ -347,6 +347,14 @@
             - /proc:/host/proc:ro
             - /sys:/host/sys:ro
             - /var/run/docker.sock:/var/run/docker.sock
+      vars:
+        service: netdata
+        container_lbls:
+          "caddy.address": "netdata.{{_domain}}"
+          "caddy.targetport": "{{ports.netdata.1}}"
+        container_env:
+          PGID: "999"
+      tags: ['never', 'netdata', 'system', 'full']    
 
       # - name: Netdata role execution
       #   include_role:
@@ -362,14 +370,6 @@
       #     drn_stream: '{{netdata_stream_config|default({})}}'
       #     drn_backend: '{{netdata_backend_config|default({})}}'
       #     drn_bind_to: "{{if_inner}}"
-      # vars:
-      #   service: netdata
-      #   container_lbls:
-      #     "caddy.address": "netdata.{{_domain}}"
-      #     "caddy.targetport": "{{ports.netdata.1}}"
-      #   container_env:
-      #     PGID: "999"
-      # tags: ['never', 'netdata', 'system', 'full']
 
   
 
